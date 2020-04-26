@@ -2,13 +2,17 @@ package com.nyist.entity;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * @Author:limaozhan
@@ -17,6 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @NoArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "article")
 @Accessors(chain = true)
 public class Article {
@@ -28,16 +33,19 @@ public class Article {
   /**
    * 标题
    */
+  @NotNull(message = "帖子标题不能为空")
   private String title;
 
   /**
    * 简要描述
    */
+  @NotNull(message = "简要描述不能为空")
   private String smallDesc;
 
   /**
    * 详细描述
    */
+  @NotNull(message = "帖子详细描述不能为空")
   private String content;
 
   /**
@@ -48,6 +56,7 @@ public class Article {
   /**
    * 发布时间
    */
+  @CreatedDate
   private Date date;
 
   /**
@@ -88,10 +97,11 @@ public class Article {
   /**
    * 帖子类别
    */
+  @NotNull(message = "帖子类别不能为空")
   private Long cid;
 
   /**
-   * 0 置顶 1精华 2 热门 3普通
+   * 1 置顶 2精华 3 热门 0普通
    */
   private Integer level;
 
